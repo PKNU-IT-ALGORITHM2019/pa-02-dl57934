@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <math.h>
 #define MIN(A, B) A > B? B: A
 
 int N;
