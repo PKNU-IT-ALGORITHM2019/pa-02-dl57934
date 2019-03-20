@@ -9,19 +9,23 @@
 using namespace std;
 
 
+vector <pair<int, int> > city;
 vector <pair<int, int> > receviePoint;
 int N; 
 int size = 0;
 int visit[18];
+int caseNumber = 0;
 double minCost = 123123123;
 double map[18][18];
 
 
 void TSP(int node, double cost, int count);
 void readInput(int series);
+void init();
 void pointToMap();
-double getDistance(int from, int to);
 void splitPoint(string item);
+double getDistance(int from, int to);
+
 
 int main(){
 	for(int i = 0; i < 7; i++){
@@ -29,14 +33,15 @@ int main(){
 		pointToMap();
 		TSP(0, 0.0, 1);
 		printf("%f\n", minCost);
-		receviePoint.clear();
-		minCost = 123123123;
+		init();
 	}
 }
 
-
-
-
+void init(){
+	receviePoint.clear();
+	minCost = 123123123;
+	city.clear();
+}
 
 void readInput(int series){
 	ifstream inFile("input"+to_string(series)+".txt");
@@ -79,7 +84,7 @@ double getDistance(int from, int to){
 
 void TSP(int node, double cost, int count){
 	visit[node] = 1;
-
+	
 	if(size == count){
 		minCost = MIN(cost+map[node][0], minCost);
 		visit[node] = 0;
