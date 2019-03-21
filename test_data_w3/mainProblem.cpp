@@ -8,10 +8,10 @@
 #define MIN(A,B) A>B? B:A
 using namespace std;
 
-
-vector <pair<int, int> > city;
+vector <int> tourCity;
 vector <pair<int, int> > receviePoint;
 int N; 
+int city[20];
 int size = 0;
 int visit[18];
 int caseNumber = 0;
@@ -25,7 +25,7 @@ void init();
 void pointToMap();
 void splitPoint(string item);
 double getDistance(int from, int to);
-
+void getPath();
 
 int main(){
 	for(int i = 0; i < 7; i++){
@@ -33,14 +33,19 @@ int main(){
 		pointToMap();
 		TSP(0, 0.0, 1);
 		printf("%f\n", minCost);
+		
+		printf("\n");
 		init();
 	}
+}
+
+void getPath(){
+	for(int i = 0; i < )
 }
 
 void init(){
 	receviePoint.clear();
 	minCost = 123123123;
-	city.clear();
 }
 
 void readInput(int series){
@@ -84,10 +89,11 @@ double getDistance(int from, int to){
 
 void TSP(int node, double cost, int count){
 	visit[node] = 1;
-	
+	city[count-1] = node;
 	if(size == count){
 		minCost = MIN(cost+map[node][0], minCost);
 		visit[node] = 0;
+
 		return ;
 	}
 
@@ -95,8 +101,7 @@ void TSP(int node, double cost, int count){
 		if(visit[i] != 1 && map[node][i] != 0)
 			if(minCost > cost+map[node][i]){
 				TSP(i, cost+map[node][i], count+1);
-			}
-		
+			}	
 	}
 	visit[node] = 0;
 }
