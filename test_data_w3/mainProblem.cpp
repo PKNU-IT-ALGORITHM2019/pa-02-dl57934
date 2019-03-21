@@ -1,13 +1,17 @@
 #include <fstream>
+#include <iostream>
 #include <cstdio>
 #include <math.h>
 #include <stdlib.h>
 #include <vector>
 #include <utility>
 #include <string>
+#include <stack>
 #define MIN(A,B) A>B? B:A
 using namespace std;
 
+vector <int> path;
+vector<int> answer;
 vector <int> tourCity;
 vector <pair<int, int> > receviePoint;
 int N; 
@@ -17,7 +21,6 @@ int visit[18];
 int caseNumber = 0;
 double minCost = 123123123;
 double map[18][18];
-
 
 void TSP(int node, double cost, int count);
 void readInput(int series);
@@ -34,18 +37,25 @@ int main(){
 		TSP(0, 0.0, 1);
 		printf("%f\n", minCost);
 		
-		printf("\n");
+		printf("[");
+		for (auto& n : answer) 
+        	cout << ' ' << n << ",";
+   		printf("]");
+   		printf("\n");
+		
 		init();
 	}
 }
 
-void getPath(){
-	for(int i = 0; i < )
-}
+// void getPath(){
+// 	for(int i = 0; i < )
+// }
 
 void init(){
 	receviePoint.clear();
 	minCost = 123123123;
+	path.clear();
+	answer.clear();
 }
 
 void readInput(int series){
@@ -89,12 +99,23 @@ double getDistance(int from, int to){
 
 void TSP(int node, double cost, int count){
 	visit[node] = 1;
+
+	path.push_back(node);
 	city[count-1] = node;
 	if(size == count){
+		if(cost+map[node][0] < minCost)
+		{
+			answer.clear(); 
+
+			for( auto& n : path){
+				answer.push_back(n);
+			}
+		}
+		path.pop_back();
 		minCost = MIN(cost+map[node][0], minCost);
 		visit[node] = 0;
 
-		return ;
+		return 	;
 	}
 
 	for(int i = 0; i < size; i++){
@@ -103,5 +124,7 @@ void TSP(int node, double cost, int count){
 				TSP(i, cost+map[node][i], count+1);
 			}	
 	}
+
+	path.pop_back();
 	visit[node] = 0;
 }
